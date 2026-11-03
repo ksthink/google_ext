@@ -20,6 +20,45 @@
       label + label {
         margin-top: 8px;
       }
+      .toggle {
+        justify-content: space-between;
+      }
+      .toggle input {
+        appearance: none;
+        position: relative;
+        flex: none;
+        width: 36px;
+        height: 20px;
+        margin: 0;
+        border-radius: 10px;
+        background: #9ca3af;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .toggle input::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.15s;
+      }
+      .toggle input:checked {
+        background: #2563eb;
+      }
+      .toggle input:checked::before {
+        transform: translateX(16px);
+      }
+      .toggle input:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+      }
+      #status:empty {
+        display: none;
+      }
       #apiKey {
         box-sizing: border-box;
         width: 100%;
@@ -58,9 +97,9 @@
     </style>
   </head>
   <body>
-    <label><input id="enabled" type="checkbox" /> 드래그 번역 켜기</label>
-    <label><input id="quizMode" type="checkbox" /> 시험 모드 (번역을 가리고 클릭하면 표시)</label>
-    <p id="status" role="status">영어 텍스트를 드래그하면 번역이 나타납니다.</p>
+    <label class="toggle">번역 <input id="enabled" type="checkbox" role="switch" /></label>
+    <label class="toggle">학습 <input id="quizMode" type="checkbox" role="switch" /></label>
+    <p id="status" role="status"></p>
     <hr />
     <div class="connection" role="status">
       <span id="dot" aria-hidden="true"></span>
