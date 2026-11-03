@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>드래그 영어 번역</title>
+    <style>
+      body {
+        width: 240px;
+        margin: 12px;
+        font: 14px/1.5 system-ui, sans-serif;
+        color-scheme: light dark;
+        word-break: keep-all;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-weight: 600;
+      }
+      label + label {
+        margin-top: 8px;
+      }
+      p {
+        margin: 8px 0 0;
+        font-size: 12px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <label><input id="enabled" type="checkbox" /> 드래그 번역 켜기</label>
+    <label><input id="quizMode" type="checkbox" /> 시험 모드 (번역을 가리고 클릭하면 표시)</label>
+    <p id="status" role="status">영어 텍스트를 드래그하면 번역이 나타납니다.</p>
+    <script src="popup.js"></script>
+  </body>
+</html>

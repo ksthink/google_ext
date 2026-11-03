@@ -1,0 +1,21 @@
+name: Build extension
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate manifest
+        run: jq -e '.manifest_version == 3' extension/manifest.json
+      # GitHub zips the artifact on download, with manifest.json at the zip root.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: extension-${{ github.sha }}
+          path: extension/
+          if-no-files-found: error
