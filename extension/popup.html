@@ -20,6 +20,36 @@
       label + label {
         margin-top: 8px;
       }
+      #apiKey {
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 4px;
+      }
+      .buttons {
+        display: flex;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .connection {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+      #dot {
+        flex: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #9ca3af;
+      }
+      #dot.connected {
+        background: #16a34a;
+      }
+      #dot.disconnected {
+        background: #dc2626;
+      }
       p {
         margin: 8px 0 0;
         font-size: 12px;
@@ -31,6 +61,24 @@
     <label><input id="enabled" type="checkbox" /> 드래그 번역 켜기</label>
     <label><input id="quizMode" type="checkbox" /> 시험 모드 (번역을 가리고 클릭하면 표시)</label>
     <p id="status" role="status">영어 텍스트를 드래그하면 번역이 나타납니다.</p>
+    <hr />
+    <div class="connection" role="status">
+      <span id="dot" aria-hidden="true"></span>
+      <span id="connection">연결 확인 중…</span>
+    </div>
+    <form id="keyForm">
+      <label for="apiKey">Gemini API 키 (선택)</label>
+      <input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="API 키 입력" />
+      <div class="buttons">
+        <button type="submit">저장</button>
+        <button id="deleteKey" type="button" hidden>삭제</button>
+      </div>
+    </form>
+    <p>
+      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">무료 키 발급받기</a><br />
+      키는 암호화해 저장하며 저장 후에는 다시 볼 수 없습니다. 키가 없으면 Chrome 내장 번역을 씁니다.
+    </p>
+    <p>드래그한 글은 Google로 전송되며, 무료 등급에서는 Google 제품 개선에 쓰일 수 있습니다. 개인정보나 민감한 글에는 주의해 주세요.</p>
     <script src="popup.js"></script>
   </body>
 </html>

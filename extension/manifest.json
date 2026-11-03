@@ -5,6 +5,10 @@
   "description": "영어 문장을 드래그하면 마우스 아래 툴팁으로 한국어 번역을 보여줍니다.",
   "minimum_chrome_version": "138",
   "permissions": ["storage"],
+  "host_permissions": ["https://generativelanguage.googleapis.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html"
   },

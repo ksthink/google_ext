@@ -141,6 +141,18 @@ function hide() {
   if (host) host.hidden = true;
 }
 
+// Uses Gemini when an API key is saved, otherwise Chrome's on-device translator.
+async function requestTranslation(text, onProgress) {
+  const { translation, error, noKey } = await chrome.runtime.sendMessage({ type: "translate", text });
+  if (error) throw new Error(error);
+  if (!noKey) return translation;
+  if (!("Translator" in self)) {
+    throw new Error("이 페이지에서는 내장 번역을 쓸 수 없습니다. 팝업에 Gemini API 키를 입력하거나 HTTPS 페이지에서 사용해 주세요.");
+  }
+  const translator = await getTranslator(onProgress);
+  return translator.translate(text);
+}
+
 async function translateSelection(x, y) {
   const text = getSelection().toString().trim();
   if (!isEnglish(text)) return;
@@ -149,16 +161,11 @@ async function translateSelection(x, y) {
     show(`선택한 글이 너무 깁니다. ${MAX_LENGTH}자 이내로 선택해 주세요.`, "", x, y);
     return;
   }
-  if (!("Translator" in self)) {
-    show("이 페이지에서는 번역 기능을 쓸 수 없습니다. 데스크톱 Chrome 138 이상의 HTTPS 페이지에서 사용해 주세요.", "", x, y);
-    return;
-  }
   show("번역 중…", text, x, y);
   try {
-    const translator = await getTranslator((loaded) => {
+    const translation = await requestTranslation(text, (loaded) => {
       if (id === requestId) show(`번역 모델 내려받는 중… ${Math.round(loaded * 100)}%`, text, x, y);
     });
-    const translation = await translator.translate(text);
     if (id === requestId) show(translation, text, x, y, quizMode);
   } catch (error) {
     if (id === requestId) show(`번역하지 못했습니다: ${error.message}`, "", x, y);
