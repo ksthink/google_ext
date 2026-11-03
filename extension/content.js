@@ -132,13 +132,14 @@ function show(message, original, x, y, concealed = false) {
   translationEl.textContent = message;
   originalEl.textContent = original;
   originalEl.hidden = !original;
-  host.hidden = false;
+  host.style.display = "block";
   place(x, y);
 }
 
 function hide() {
   requestId++;
-  if (host) host.hidden = true;
+  // Not the hidden attribute: the host's "all: initial" style overrides it.
+  if (host) host.style.display = "none";
 }
 
 // Uses Gemini when an API key is saved, otherwise Chrome's on-device translator.
